@@ -10,9 +10,9 @@ set(serial_SRCS
     include/serial/v8stdint.h
 )
 if(APPLE)
-	# If OSX
-	list(APPEND serial_SRCS src/impl/unix.cc)
-	list(APPEND serial_SRCS src/impl/list_ports/list_ports_osx.cc)
+    # If OSX
+    list(APPEND serial_SRCS src/impl/unix.cc)
+    list(APPEND serial_SRCS src/impl/list_ports/list_ports_osx.cc)
 elseif(WIN32)
     # If windows
     list(APPEND serial_SRCS src/impl/win.cc)
@@ -27,10 +27,10 @@ endif()
 add_library(${PROJECT_NAME} ${serial_SRCS})
 if(APPLE)
     target_link_libraries(${PROJECT_NAME} ${FOUNDATION_LIBRARY} ${IOKIT_LIBRARY})
-elseif(WIN32)
-    target_link_libraries(${PROJECT_NAME} setupapi)
-else()
+elseif(UNIX)
     target_link_libraries(${PROJECT_NAME} rt pthread)
+else()
+    target_link_libraries(${PROJECT_NAME} setupapi)
 endif()
 
 ## example
